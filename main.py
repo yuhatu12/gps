@@ -33,8 +33,8 @@ def upload_file1():
       return render_template('img.html',titlename="helloworld")
 
 # get OpenStreetMap image
-def get_osm_img(minlat, minlon, maxlat, maxlon, scale=60000, img_format='png',cen_lat='cen_lat',cen_lon='cen_lon'):
-    url = 'http://maps.googleapis.com/maps/api/staticmap?sensor=false&size=400x400&maptype=satellite&visible=35.01,135.75&visible=35.02,135.76'
+def get_osm_img(minlat, minlon, maxlat, maxlon, scale=60000, img_format='png'):
+    url = 'http://maps.googleapis.com/maps/api/staticmap?sensor=false&size=400x400&maptype=satellite&visible=%10lf,%10lf&visible=%10lf,%10lf'% (minlon,minlat,maxlon,maxlat)
     payload = {
         'mapnik_format': img_format,
         'mapnik_scale': scale,
@@ -102,11 +102,11 @@ def mapping_gps_data(file):
     file_name = 'osm_new.png'
 
     bg_img = None
-    bg_img = get_osm_img(minlat=minlat, minlon=minlon, maxlat=maxlat, maxlon=maxlon, scale=12000,cen_lat=cen_lat,cen_lon=cen_lon)
+    bg_img = get_osm_img(minlat=minlat, minlon=minlon, maxlat=maxlat, maxlon=maxlon, scale=12000)
     try:
         bg_img = Image.open(file_name)
     except FileNotFoundError as fnfe:
-        bg_img = get_osm_img(minlat=minlat, minlon=minlon, maxlat=maxlat, maxlon=maxlon, scale=12000,cen_lat=cen_lat,cen_lon=cen_lon)
+        bg_img = get_osm_img(minlat=minlat, minlon=minlon, maxlat=maxlat, maxlon=maxlon, scale=12000)
         bg_img.save(file_name)
 
     bmap.imshow(bg_img, origin='upper')
