@@ -127,6 +127,8 @@ def mapping_gps_data(file):
 
 
 def main():
+    os.remove('osm_new.png')
+    os.remove('static/plotted.png')
     mapping_gps_data()
 
 
